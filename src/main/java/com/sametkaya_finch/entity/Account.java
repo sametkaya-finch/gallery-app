@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 public class Account extends BaseEntity {
 
 	@Column(name = "account_name")
-	private String accountNoString;
+	private String accountNo;
 
 	@Column(name = "iban")
 	private String iban;
