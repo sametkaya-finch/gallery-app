@@ -17,6 +17,8 @@ import lombok.NoArgsConstructor;
 
 public class SaledCar extends BaseEntity {
 
+	// su musteri su galerinin su arabasini satin almistir
+
 	@ManyToOne
 	private Gallerist gallerist;
 

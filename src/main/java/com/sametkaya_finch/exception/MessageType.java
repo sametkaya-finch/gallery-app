@@ -9,8 +9,10 @@ public enum MessageType {
 	USERNAME_OR_PASSWORD_INVALID("1007", "Kullanici Adi veya Sifre Hatali!"),
 	REFRESH_TOKEN_NOT_FOUND("1008", "Refresh Token Bulunamadi!"),
 	REFRESH_TOKEN_IS_EXPIRED("1009", "Refresh Tokenin Suresi Bitmistir!"),
-	CURRENCY_RATES_IS_OCCURED("1010", "Doviz Kuru Alinamadi!");
-	// Buradaki degerler conts icine parametre olarak gecilecek const icinde
+	CURRENCY_RATES_IS_OCCURED("1010", "Doviz Kuru Alinamadi!"),
+	CUSTOMER_AMOUNT_IS_NOT_ENOUGH("1011", "Musterinin Parasi Yeterli Degildir!"),
+	CAR_STATUS_IS_ALREADY_SALED("1012", "Araba Satilmis Gorundugu Icin Satilamaz");
+	// Buradaki degerler conts icine parametre olarak gecilecek const icinde de
 	// bunlar code ve message icine yazilacak
 
 	private String code;
