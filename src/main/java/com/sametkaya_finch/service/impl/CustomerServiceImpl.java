@@ -1,6 +1,8 @@
 package com.sametkaya_finch.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
@@ -79,6 +81,111 @@ public class CustomerServiceImpl implements ICustomerService {
 		dtoCustomer.setAccount(dtoAccount);
 
 		return dtoCustomer;
+	}
+
+	@Override
+	public DtoCustomer getCustomerById(Long id) {
+		Optional<Customer> optId = customerRepository.findById(id);
+		if (optId.isEmpty()) {
+			new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, id.toString()));
+		}
+
+		Customer customer = optId.get();
+		DtoCustomer dtoCustomer = new DtoCustomer();
+		BeanUtils.copyProperties(customer, dtoCustomer);
+
+		DtoAddress dtoAddress = new DtoAddress();
+		BeanUtils.copyProperties(customer.getAddress(), dtoAddress);
+		dtoCustomer.setAddress(dtoAddress);
+
+		DtoAccount dtoAccount = new DtoAccount();
+		BeanUtils.copyProperties(customer.getAccount(), dtoAccount);
+		dtoCustomer.setAccount(dtoAccount);
+
+		return dtoCustomer;
+
+	}
+
+	@Override
+	public List<DtoCustomer> getAllCustomers() {
+
+		List<Customer> customers = customerRepository.findAll();
+		List<DtoCustomer> dtoCustomersList = new ArrayList<>();
+
+		for (Customer customer : customers) {
+
+			DtoCustomer dtoCustomer = new DtoCustomer();
+			BeanUtils.copyProperties(customer, dtoCustomer);
+
+			DtoAddress dtoAddress = new DtoAddress();
+			BeanUtils.copyProperties(customer.getAddress(), dtoAddress);
+			dtoCustomer.setAddress(dtoAddress);
+
+			DtoAccount dtoAccount = new DtoAccount();
+			BeanUtils.copyProperties(customer.getAccount(), dtoAccount);
+			dtoCustomer.setAccount(dtoAccount);
+
+			dtoCustomersList.add(dtoCustomer);
+
+		}
+
+		return dtoCustomersList;
+	}
+
+	@Override
+	public DtoCustomer updateCustomer(Long id, DtoCustomerIU dtoCustomerIU) {
+
+		Optional<Customer> optCustomer = customerRepository.findById(id);
+		if (optCustomer.isEmpty()) {
+			new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, id.toString()));
+
+		}
+
+		Optional<Address> optAddress = addressRepository.findById(dtoCustomerIU.getAddressId());
+		if (optAddress.isEmpty()) {
+			new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, dtoCustomerIU.getAccountId().toString()));
+
+		}
+
+		Optional<Account> optAccount = accountRepository.findById(dtoCustomerIU.getAccountId());
+		if (optAccount.isEmpty()) {
+			new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, dtoCustomerIU.getAccountId().toString()));
+
+		}
+
+		Customer customer = optCustomer.get();
+		BeanUtils.copyProperties(dtoCustomerIU, customer, "id", "CreateTimeDate");
+		customer.setAddress(optAddress.get());
+		customer.setAccount(optAccount.get());
+
+		Customer updatedCustomer = customerRepository.save(customer);
+
+		DtoCustomer dtoCustomer = new DtoCustomer();
+		BeanUtils.copyProperties(updatedCustomer, dtoCustomer);
+
+		DtoAddress dtoAddress = new DtoAddress();
+		BeanUtils.copyProperties(updatedCustomer.getAddress(), dtoAddress);
+		dtoCustomer.setAddress(dtoAddress);
+
+		DtoAccount dtoAccount = new DtoAccount();
+		BeanUtils.copyProperties(updatedCustomer.getAccount(), dtoAccount);
+		dtoCustomer.setAccount(dtoAccount);
+
+		return dtoCustomer;
+	}
+
+	@Override
+	public void deleteCustomer(Long id) {
+		Optional<Customer> optCustomer = customerRepository.findById(id);
+		if (optCustomer.isEmpty()) {
+			new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, id.toString()));
+
+		}
+
+		Customer customer = optCustomer.get();
+
+		customerRepository.delete(customer);
+
 	}
 
 }
