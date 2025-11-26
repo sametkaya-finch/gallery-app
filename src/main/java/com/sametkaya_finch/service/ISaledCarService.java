@@ -6,4 +6,5 @@ import com.sametkaya_finch.dto.DtoSaledCarIU;
 public interface ISaledCarService {
 
 	public DtoSaledCar buyCar(DtoSaledCarIU dtoSaledCarIU);
+
 }

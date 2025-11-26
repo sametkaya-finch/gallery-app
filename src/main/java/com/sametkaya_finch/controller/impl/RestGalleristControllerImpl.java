@@ -1,7 +1,13 @@
 package com.sametkaya_finch.controller.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,6 +34,32 @@ public class RestGalleristControllerImpl extends RestBaseController implements I
 
 		return ok(galleristService.saveGallerist(dtoGalleristIU));
 
+	}
+
+	@GetMapping("/list/{id}")
+	@Override
+	public RootEntity<DtoGallerist> getGalleristById(@PathVariable Long id) {
+		return ok(galleristService.getGalleristById(id));
+	}
+
+	@GetMapping("/list")
+	@Override
+	public RootEntity<List<DtoGallerist>> getAllGallerists() {
+		return ok(galleristService.getAllGallerists());
+	}
+
+	@PutMapping("/update/{id}")
+	@Override
+	public RootEntity<DtoGallerist> updateGallerist(@PathVariable Long id,
+			@Valid @RequestBody DtoGalleristIU dtoGalleristIU) {
+		return ok(galleristService.updateGallerist(id, dtoGalleristIU));
+	}
+
+	@DeleteMapping("/delete/{id}")
+	@Override
+	public RootEntity<String> deleteGallerist(@PathVariable Long id) {
+		galleristService.deleteGallerist(id);
+		return ok("Gallerist Basariyla Silindi.");
 	}
 
 }

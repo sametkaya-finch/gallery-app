@@ -82,7 +82,7 @@ public class AccountServiceImpl implements IAccountService {
 		}
 
 		Account account = optAccount.get();
-		BeanUtils.copyProperties(dtoAccountIU, account, "id", "CreateTimeDate");
+		BeanUtils.copyProperties(dtoAccountIU, account);
 		Account updatedAccount = accountRepository.save(account);
 
 		DtoAccount dtoAccount = new DtoAccount();

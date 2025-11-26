@@ -89,7 +89,7 @@ public class AddressServiceImpl implements IAddressService {
 		}
 
 		Address address = optAddress.get();
-		BeanUtils.copyProperties(dtoAddressIU, address, "id", "CreateTimeDate");
+		BeanUtils.copyProperties(dtoAddressIU, address);
 
 		Address updatedAddress = addressRepository.save(address);
 

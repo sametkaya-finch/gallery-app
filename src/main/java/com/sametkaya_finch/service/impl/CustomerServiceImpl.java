@@ -154,7 +154,7 @@ public class CustomerServiceImpl implements ICustomerService {
 		}
 
 		Customer customer = optCustomer.get();
-		BeanUtils.copyProperties(dtoCustomerIU, customer, "id", "CreateTimeDate");
+		BeanUtils.copyProperties(dtoCustomerIU, customer);
 		customer.setAddress(optAddress.get());
 		customer.setAccount(optAccount.get());
 
